@@ -60,16 +60,19 @@ class PaymentMethodSelectorSheet extends StatelessWidget {
                 itemCount: plugins.length,
                 itemBuilder: (context, index) {
                   final plugin = plugins[index];
+                  final iconAsset = plugin.iconAsset;
                   return ListTile(
-                    leading: Image.asset(
-                      plugin.iconAsset,
-                      width: 32,
-                      height: 32,
-                      errorBuilder: (_, _, _) => Icon(
-                        Icons.payment,
-                        color: theme.colorScheme.primary,
-                      ),
-                    ),
+                    leading: iconAsset == null
+                        ? Icon(Icons.payment, color: theme.colorScheme.primary)
+                        : Image.asset(
+                            iconAsset,
+                            width: 32,
+                            height: 32,
+                            errorBuilder: (_, _, _) => Icon(
+                              Icons.payment,
+                              color: theme.colorScheme.primary,
+                            ),
+                          ),
                     title: Text(
                       plugin.displayName,
                       style: theme.textTheme.bodyLarge,

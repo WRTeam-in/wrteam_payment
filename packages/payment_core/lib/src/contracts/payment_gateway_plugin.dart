@@ -11,8 +11,9 @@ abstract class PaymentGatewayPlugin<T extends PaymentRequest> {
   /// Human-readable display name
   String get displayName;
 
-  /// Asset path or URL for icon/logo
-  String get iconAsset;
+  /// Asset path or URL for icon/logo. Null falls back to a generic icon in
+  /// [PaymentMethodSelectorSheet].
+  String? get iconAsset;
 
   /// Internal payment execution method.
   /// Marked `@internal` so callers execute via `PaymentOrchestrator.pay()`.
