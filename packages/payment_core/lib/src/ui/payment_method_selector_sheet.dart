@@ -1,41 +1,39 @@
 import 'package:flutter/material.dart';
-import '../contracts/payment_gateway_plugin.dart';
-import '../models/payment_gateway_type.dart';
+import 'package:payment_core/payment_core.dart';
 
-class PaymentMethodSelectorSheet extends StatelessWidget {
-  final List<PaymentGatewayPlugin> plugins;
-  final String title;
+/// Shows the payment method selector bottom sheet. Not a widget itself —
+/// use [show] rather than instantiating the underlying UI directly.
+class PaymentMethodSelectorSheet {
+  const PaymentMethodSelectorSheet._();
 
-  const PaymentMethodSelectorSheet({
-    super.key,
-    required this.plugins,
-    this.title = 'Select Payment Method',
-  });
-
-  /// Helper static method to show sheet and await selected PaymentGatewayType
   static Future<PaymentGatewayType?> show(
     BuildContext context, {
-    required List<PaymentGatewayPlugin> plugins,
     String? title,
   }) {
     return showModalBottomSheet<PaymentGatewayType>(
       context: context,
       isScrollControlled: true,
       useRootNavigator: true,
-      shape: Theme.of(context).bottomSheetTheme.shape ??
+      shape:
+          Theme.of(context).bottomSheetTheme.shape ??
           const RoundedRectangleBorder(
             borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
           ),
-      builder: (context) => PaymentMethodSelectorSheet(
-        plugins: plugins,
-        title: title ?? 'Select Payment Method',
-      ),
+      builder: (context) =>
+          _PaymentMethodSelectorSheetView(title: title ?? 'Select Payment Method'),
     );
   }
+}
+
+class _PaymentMethodSelectorSheetView extends StatelessWidget {
+  const _PaymentMethodSelectorSheetView({required this.title});
+
+  final String title;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final plugins = PaymentRegistry.registeredPlugins;
 
     return SafeArea(
       child: Padding(
