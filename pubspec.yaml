@@ -8,16 +8,19 @@ environment:
   sdk: ^3.12.2
   flutter: ">=1.17.0"
 
+workspace:
+  - packages/payment_core
+  - packages/payment_stripe
+
 dependencies:
   flutter:
     sdk: flutter
-  payment_core:
-    path: packages/payment_core
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^6.0.0
+  melos: ^8.2.2
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

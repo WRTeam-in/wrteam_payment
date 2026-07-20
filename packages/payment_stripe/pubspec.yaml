@@ -3,6 +3,7 @@ description: "Stripe PaymentSheet gateway plugin for wrteam_payment."
 version: 0.0.1
 homepage:
 publish_to: 'none'
+resolution: workspace
 
 environment:
   sdk: ^3.12.2

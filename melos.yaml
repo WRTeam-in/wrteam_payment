@@ -1,4 +1,11 @@
-name: wrteam_payment_workspace
+name: wrteam_payment
 
 packages:
-  - packages/**
+  - packages/*
+
+scripts:
+  test:
+    exec: flutter test
+    packageFilters:
+      dirExists: test
+

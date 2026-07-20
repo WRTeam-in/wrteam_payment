@@ -3,6 +3,7 @@ description: "Core contracts, models, registry and orchestrator for wrteam_payme
 version: 0.0.1
 homepage:
 publish_to: 'none'
+resolution: workspace
 
 environment:
   sdk: ^3.12.2
