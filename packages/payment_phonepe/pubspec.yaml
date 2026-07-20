@@ -1,0 +1,23 @@
+name: payment_phonepe
+description: "PhonePe checkout gateway plugin for wrteam_payment."
+version: 0.0.1
+homepage:
+publish_to: 'none'
+resolution: workspace
+
+environment:
+  sdk: ^3.12.2
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  payment_core:
+    path: ../payment_core
+  phonepe_payment_sdk: ^3.0.2
+  meta: ^1.15.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0

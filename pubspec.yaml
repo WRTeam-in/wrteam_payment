@@ -12,6 +12,7 @@ workspace:
   - packages/payment_core
   - packages/payment_stripe
   - packages/payment_razorpay
+  - packages/payment_phonepe
 
 dependencies:
   flutter:
