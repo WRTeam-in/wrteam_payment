@@ -11,6 +11,7 @@ environment:
 workspace:
   - packages/payment_core
   - packages/payment_stripe
+  - packages/payment_razorpay
 
 dependencies:
   flutter:
