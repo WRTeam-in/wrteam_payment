@@ -10,7 +10,7 @@ class PaymentOrchestrator {
     final plugin = PaymentRegistry.getPlugin(request.gatewayType);
     if (plugin == null) {
       return PaymentResult.failed(
-        message: 'No registered plugin found for gateway "${request.gatewayType.name}".',
+        message: 'No registered plugin found for gateway "${request.gatewayType.id}".',
         errorCode: 'PLUGIN_NOT_FOUND',
       );
     }
