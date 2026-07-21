@@ -7,12 +7,12 @@ class WebViewCheckoutPage extends StatefulWidget {
   const WebViewCheckoutPage({
     super.key,
     required this.checkoutUrl,
-    required this.returnUrlPrefixes,
+    required this.returnUrlPrefix,
     required this.title,
   });
 
   final String checkoutUrl;
-  final List<String> returnUrlPrefixes;
+  final String returnUrlPrefix;
   final String title;
 
   @override
@@ -32,7 +32,7 @@ class _WebViewCheckoutPageState extends State<WebViewCheckoutPage> {
         NavigationDelegate(
           onNavigationRequest: (request) {
             log(request.url);
-            if (widget.returnUrlPrefixes.any(request.url.startsWith)) {
+            if (request.url.startsWith(widget.returnUrlPrefix)) {
               Navigator.of(context).pop(Uri.parse(request.url));
               return NavigationDecision.prevent;
             }

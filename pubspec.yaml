@@ -15,6 +15,10 @@ workspace:
   - packages/payment_phonepe
   - packages/payment_webview_core
   - packages/payment_paystack
+  - packages/payment_flutterwave
+  - packages/payment_paytabs
+  - packages/payment_dpo
+  - packages/payment_paypal
 
 dependencies:
   flutter:

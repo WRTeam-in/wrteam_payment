@@ -1,8 +1,8 @@
 import 'package:payment_core/payment_core.dart';
 import 'package:payment_webview_core/payment_webview_core.dart';
 
-class PaystackRequest extends WebViewCheckoutRequest {
-  PaystackRequest({
+class PayTabsRequest extends WebViewCheckoutRequest {
+  PayTabsRequest({
     required super.checkoutUrl,
     required super.returnUrlPrefix,
     required super.transactionReference,
@@ -11,5 +11,5 @@ class PaystackRequest extends WebViewCheckoutRequest {
   });
 
   @override
-  PaymentGatewayType get gatewayType => PaymentGatewayType.paystack;
+  PaymentGatewayType get gatewayType => PaymentGatewayType.paytabs;
 }

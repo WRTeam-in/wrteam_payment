@@ -16,7 +16,7 @@ abstract class WebViewGatewayPlugin<T extends WebViewCheckoutRequest>
     final returnUri = await WebViewCheckoutLauncher.open(
       context,
       checkoutUrl: request.checkoutUrl,
-      returnUrlPrefixes: request.returnUrlPrefixes,
+      returnUrlPrefix: request.returnUrlPrefix,
       title: request.title,
     );
 

@@ -6,6 +6,7 @@ enum PaymentGatewayType {
   flutterwave,
   paypal,
   dpo,
+  paytabs,
   bankTransfer,
   custom;
 

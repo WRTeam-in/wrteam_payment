@@ -9,20 +9,21 @@ import 'webview_return_url_matcher.dart';
 abstract class WebViewCheckoutRequest extends PaymentRequest {
   WebViewCheckoutRequest({
     required this.checkoutUrl,
-    required this.returnUrlPrefixes,
+    required this.returnUrlPrefix,
     required this.transactionReference,
     this.matcher = const WebViewReturnUrlMatcher(),
     this.title = 'Complete Payment',
-  }) : assert(returnUrlPrefixes.isNotEmpty, 'returnUrlPrefixes must not be empty');
+  });
 
   /// The hosted checkout page to load.
   final String checkoutUrl;
 
-  /// The app's own registered callback URL prefix(es). Only redirects
-  /// starting with one of these are treated as terminal — everything else
-  /// keeps loading. Most gateways only register one; some (e.g. PayPal, with
-  /// distinct approve/cancel URLs) need more than one.
-  final List<String> returnUrlPrefixes;
+  /// The app's own domain/scheme that every one of its callback URLs lives
+  /// under (e.g. `https://yourapp.com`, or a custom scheme). Any navigation
+  /// starting with this is treated as terminal and handed back — the exact
+  /// path (success/cancel/etc.) is for the plugin's `mapResult` to
+  /// interpret, not the launcher.
+  final String returnUrlPrefix;
 
   /// The transaction/order reference the backend generated when building
   /// [checkoutUrl]. Returned as [PaymentResult.transactionId] and needed to
@@ -30,8 +31,11 @@ abstract class WebViewCheckoutRequest extends PaymentRequest {
   final String transactionReference;
 
   /// Fallback matcher used only when the gateway's own redirect contract
-  /// (documented query params) doesn't resolve an outcome.
-  final WebViewReturnUrlMatcher matcher;
+  /// (documented query params) doesn't resolve an outcome. Defaults to
+  /// keyword matching; a gateway package can supply its own
+  /// [WebViewOutcomeMatcher] implementation instead (e.g. one that matches
+  /// literal registered URLs rather than guessing from words in the path).
+  final WebViewOutcomeMatcher matcher;
 
   /// App bar title shown while the checkout page is loading.
   final String title;
