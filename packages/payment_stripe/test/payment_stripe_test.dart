@@ -35,19 +35,6 @@ void main() {
       expect(StripeGatewayPlugin().type, PaymentGatewayType.stripe);
     });
 
-    test('displayName defaults to Stripe and can be overridden', () {
-      expect(StripeGatewayPlugin().displayName, 'Stripe');
-      expect(StripeGatewayPlugin(displayName: 'Card').displayName, 'Card');
-    });
-
-    test('iconAsset defaults to null and can be overridden', () {
-      expect(StripeGatewayPlugin().iconAsset, isNull);
-      expect(
-        StripeGatewayPlugin(iconAsset: 'assets/stripe.png').iconAsset,
-        'assets/stripe.png',
-      );
-    });
-
     group('paymentIntentIdFrom', () {
       test('extracts the id preceding _secret_', () {
         expect(

@@ -29,19 +29,6 @@ void main() {
       expect(PaystackGatewayPlugin().type, PaymentGatewayType.paystack);
     });
 
-    test('displayName defaults to Paystack and can be overridden', () {
-      expect(PaystackGatewayPlugin().displayName, 'Paystack');
-      expect(PaystackGatewayPlugin(displayName: 'Cards').displayName, 'Cards');
-    });
-
-    test('iconAsset defaults to null and can be overridden', () {
-      expect(PaystackGatewayPlugin().iconAsset, isNull);
-      expect(
-        PaystackGatewayPlugin(iconAsset: 'assets/paystack.png').iconAsset,
-        'assets/paystack.png',
-      );
-    });
-
     group('resultFrom', () {
       test('a reference query param always yields pending, regardless of outcome', () {
         final result = PaystackGatewayPlugin.resultFrom(

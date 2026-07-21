@@ -5,21 +5,6 @@ import 'package:payment_webview_core/payment_webview_core.dart';
 import 'paystack_request.dart';
 
 class PaystackGatewayPlugin extends WebViewGatewayPlugin<PaystackRequest> {
-  PaystackGatewayPlugin({
-    this.displayName = 'Paystack',
-    this.iconAsset,
-  });
-
-  @override
-  final String displayName;
-
-  /// No icon is bundled with this package: Paystack's brand assets are
-  /// subject to Paystack's own brand guidelines, so it isn't ours to
-  /// redistribute. Leave null to fall back to a generic payment icon in
-  /// [PaymentMethodSelectorSheet], or supply your own asset/URL.
-  @override
-  final String? iconAsset;
-
   @override
   PaymentGatewayType get type => PaymentGatewayType.paystack;
 

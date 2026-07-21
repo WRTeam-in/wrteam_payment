@@ -44,19 +44,6 @@ void main() {
       expect(PhonePeGatewayPlugin().type, PaymentGatewayType.phonepe);
     });
 
-    test('displayName defaults to PhonePe and can be overridden', () {
-      expect(PhonePeGatewayPlugin().displayName, 'PhonePe');
-      expect(PhonePeGatewayPlugin(displayName: 'UPI').displayName, 'UPI');
-    });
-
-    test('iconAsset defaults to null and can be overridden', () {
-      expect(PhonePeGatewayPlugin().iconAsset, isNull);
-      expect(
-        PhonePeGatewayPlugin(iconAsset: 'assets/phonepe.png').iconAsset,
-        'assets/phonepe.png',
-      );
-    });
-
     group('resultFrom', () {
       test('null response is a failed NO_RESPONSE result', () {
         final result = PhonePeGatewayPlugin.resultFrom(

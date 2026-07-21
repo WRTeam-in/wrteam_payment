@@ -6,21 +6,6 @@ import 'package:payment_core/payment_core.dart';
 import 'stripe_request.dart';
 
 class StripeGatewayPlugin extends PaymentGatewayPlugin<StripeRequest> {
-  StripeGatewayPlugin({
-    this.displayName = 'Stripe',
-    this.iconAsset,
-  });
-
-  @override
-  final String displayName;
-
-  /// No icon is bundled with this package: Stripe's brand assets are subject
-  /// to Stripe's own brand guidelines, so it isn't ours to redistribute.
-  /// Leave null to fall back to a generic payment icon in
-  /// [PaymentMethodSelectorSheet], or supply your own asset/URL.
-  @override
-  final String? iconAsset;
-
   @override
   PaymentGatewayType get type => PaymentGatewayType.stripe;
 

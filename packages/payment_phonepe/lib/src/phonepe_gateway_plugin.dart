@@ -6,21 +6,6 @@ import 'package:phonepe_payment_sdk/phonepe_payment_sdk.dart';
 import 'phonepe_request.dart';
 
 class PhonePeGatewayPlugin extends PaymentGatewayPlugin<PhonePeRequest> {
-  PhonePeGatewayPlugin({
-    this.displayName = 'PhonePe',
-    this.iconAsset,
-  });
-
-  @override
-  final String displayName;
-
-  /// No icon is bundled with this package: PhonePe's brand assets are
-  /// subject to PhonePe's own brand guidelines, so it isn't ours to
-  /// redistribute. Leave null to fall back to a generic payment icon in
-  /// [PaymentMethodSelectorSheet], or supply your own asset/URL.
-  @override
-  final String? iconAsset;
-
   @override
   PaymentGatewayType get type => PaymentGatewayType.phonepe;
 

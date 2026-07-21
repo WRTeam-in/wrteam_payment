@@ -5,21 +5,6 @@ import 'package:payment_webview_core/payment_webview_core.dart';
 import 'flutterwave_request.dart';
 
 class FlutterwaveGatewayPlugin extends WebViewGatewayPlugin<FlutterwaveRequest> {
-  FlutterwaveGatewayPlugin({
-    this.displayName = 'Flutterwave',
-    this.iconAsset,
-  });
-
-  @override
-  final String displayName;
-
-  /// No icon is bundled with this package: Flutterwave's brand assets are
-  /// subject to Flutterwave's own brand guidelines, so it isn't ours to
-  /// redistribute. Leave null to fall back to a generic payment icon in
-  /// [PaymentMethodSelectorSheet], or supply your own asset/URL.
-  @override
-  final String? iconAsset;
-
   @override
   PaymentGatewayType get type => PaymentGatewayType.flutterwave;
 

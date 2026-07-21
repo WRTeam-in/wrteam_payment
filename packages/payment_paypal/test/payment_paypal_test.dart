@@ -80,19 +80,6 @@ void main() {
       expect(PayPalGatewayPlugin().type, PaymentGatewayType.paypal);
     });
 
-    test('displayName defaults to PayPal and can be overridden', () {
-      expect(PayPalGatewayPlugin().displayName, 'PayPal');
-      expect(PayPalGatewayPlugin(displayName: 'Cards').displayName, 'Cards');
-    });
-
-    test('iconAsset defaults to null and can be overridden', () {
-      expect(PayPalGatewayPlugin().iconAsset, isNull);
-      expect(
-        PayPalGatewayPlugin(iconAsset: 'assets/paypal.png').iconAsset,
-        'assets/paypal.png',
-      );
-    });
-
     group('resultFrom', () {
       test('reaching cancelUrlPrefix is trusted directly as cancelled', () {
         final result = PayPalGatewayPlugin.resultFrom(

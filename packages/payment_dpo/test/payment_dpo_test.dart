@@ -27,19 +27,6 @@ void main() {
       expect(DpoGatewayPlugin().type, PaymentGatewayType.dpo);
     });
 
-    test('displayName defaults to DPO and can be overridden', () {
-      expect(DpoGatewayPlugin().displayName, 'DPO');
-      expect(DpoGatewayPlugin(displayName: 'Cards').displayName, 'Cards');
-    });
-
-    test('iconAsset defaults to null and can be overridden', () {
-      expect(DpoGatewayPlugin().iconAsset, isNull);
-      expect(
-        DpoGatewayPlugin(iconAsset: 'assets/dpo.png').iconAsset,
-        'assets/dpo.png',
-      );
-    });
-
     group('resultFrom', () {
       test('a TransactionToken yields pending', () {
         final result = DpoGatewayPlugin.resultFrom(

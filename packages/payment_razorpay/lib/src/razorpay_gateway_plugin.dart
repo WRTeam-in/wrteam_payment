@@ -8,18 +8,6 @@ import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'razorpay_request.dart';
 
 class RazorpayGatewayPlugin extends PaymentGatewayPlugin<RazorpayRequest> {
-  RazorpayGatewayPlugin({this.displayName = 'Razorpay', this.iconAsset});
-
-  @override
-  final String displayName;
-
-  /// No icon is bundled with this package: Razorpay's brand assets are
-  /// subject to Razorpay's own brand guidelines, so it isn't ours to
-  /// redistribute. Leave null to fall back to a generic payment icon in
-  /// [PaymentMethodSelectorSheet], or supply your own asset/URL.
-  @override
-  final String? iconAsset;
-
   @override
   PaymentGatewayType get type => PaymentGatewayType.razorpay;
 

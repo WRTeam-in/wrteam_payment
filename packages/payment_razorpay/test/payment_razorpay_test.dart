@@ -42,19 +42,6 @@ void main() {
       expect(RazorpayGatewayPlugin().type, PaymentGatewayType.razorpay);
     });
 
-    test('displayName defaults to Razorpay and can be overridden', () {
-      expect(RazorpayGatewayPlugin().displayName, 'Razorpay');
-      expect(RazorpayGatewayPlugin(displayName: 'UPI').displayName, 'UPI');
-    });
-
-    test('iconAsset defaults to null and can be overridden', () {
-      expect(RazorpayGatewayPlugin().iconAsset, isNull);
-      expect(
-        RazorpayGatewayPlugin(iconAsset: 'assets/razorpay.png').iconAsset,
-        'assets/razorpay.png',
-      );
-    });
-
     group('errorCodeName', () {
       test('maps known Razorpay error codes', () {
         expect(

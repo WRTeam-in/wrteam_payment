@@ -28,19 +28,6 @@ void main() {
       expect(FlutterwaveGatewayPlugin().type, PaymentGatewayType.flutterwave);
     });
 
-    test('displayName defaults to Flutterwave and can be overridden', () {
-      expect(FlutterwaveGatewayPlugin().displayName, 'Flutterwave');
-      expect(FlutterwaveGatewayPlugin(displayName: 'Cards').displayName, 'Cards');
-    });
-
-    test('iconAsset defaults to null and can be overridden', () {
-      expect(FlutterwaveGatewayPlugin().iconAsset, isNull);
-      expect(
-        FlutterwaveGatewayPlugin(iconAsset: 'assets/flutterwave.png').iconAsset,
-        'assets/flutterwave.png',
-      );
-    });
-
     group('resultFrom', () {
       test('status=cancelled is trusted directly as cancelled', () {
         final result = FlutterwaveGatewayPlugin.resultFrom(

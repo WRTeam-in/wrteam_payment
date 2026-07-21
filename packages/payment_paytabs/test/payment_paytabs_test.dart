@@ -27,19 +27,6 @@ void main() {
       expect(PayTabsGatewayPlugin().type, PaymentGatewayType.paytabs);
     });
 
-    test('displayName defaults to PayTabs and can be overridden', () {
-      expect(PayTabsGatewayPlugin().displayName, 'PayTabs');
-      expect(PayTabsGatewayPlugin(displayName: 'Cards').displayName, 'Cards');
-    });
-
-    test('iconAsset defaults to null and can be overridden', () {
-      expect(PayTabsGatewayPlugin().iconAsset, isNull);
-      expect(
-        PayTabsGatewayPlugin(iconAsset: 'assets/paytabs.png').iconAsset,
-        'assets/paytabs.png',
-      );
-    });
-
     group('resultFrom', () {
       test('a tranRef always yields pending regardless of respStatus', () {
         final result = PayTabsGatewayPlugin.resultFrom(

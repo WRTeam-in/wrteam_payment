@@ -5,21 +5,6 @@ import 'package:payment_webview_core/payment_webview_core.dart';
 import 'paypal_request.dart';
 
 class PayPalGatewayPlugin extends WebViewGatewayPlugin<PayPalRequest> {
-  PayPalGatewayPlugin({
-    this.displayName = 'PayPal',
-    this.iconAsset,
-  });
-
-  @override
-  final String displayName;
-
-  /// No icon is bundled with this package: PayPal's brand assets are
-  /// subject to PayPal's own brand guidelines, so it isn't ours to
-  /// redistribute. Leave null to fall back to a generic payment icon in
-  /// [PaymentMethodSelectorSheet], or supply your own asset/URL.
-  @override
-  final String? iconAsset;
-
   @override
   PaymentGatewayType get type => PaymentGatewayType.paypal;
 

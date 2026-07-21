@@ -16,12 +16,6 @@ class _FakePlugin extends PaymentGatewayPlugin<_FakeRequest> {
   PaymentGatewayType get type => PaymentGatewayType.custom;
 
   @override
-  String get displayName => 'Fake Gateway';
-
-  @override
-  String get iconAsset => 'assets/fake.png';
-
-  @override
   Future<PaymentResult> processPayment(BuildContext context, _FakeRequest request) async {
     if (shouldThrow) {
       throw Exception('boom');
