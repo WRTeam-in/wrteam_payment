@@ -25,6 +25,24 @@ dependencies:
     sdk: flutter
   payment_core:
     path: packages/payment_core
+  payment_webview_core:
+    path: packages/payment_webview_core
+  payment_stripe:
+    path: packages/payment_stripe
+  payment_razorpay:
+    path: packages/payment_razorpay
+  payment_phonepe:
+    path: packages/payment_phonepe
+  payment_paystack:
+    path: packages/payment_paystack
+  payment_flutterwave:
+    path: packages/payment_flutterwave
+  payment_paytabs:
+    path: packages/payment_paytabs
+  payment_dpo:
+    path: packages/payment_dpo
+  payment_paypal:
+    path: packages/payment_paypal
 
 dev_dependencies:
   flutter_test:
