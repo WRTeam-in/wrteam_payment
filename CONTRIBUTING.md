@@ -32,11 +32,16 @@ scratch:
 
 ### Steps
 
-1. Clone the repo and create `packages/payment_<gateway>/` with its own
-   `pubspec.yaml` (`publish_to: 'none'`, `resolution: workspace`, a path
-   dependency on `payment_core` and, if redirect-based,
-   `payment_webview_core`), `analysis_options.yaml`
-   (`include: package:flutter_lints/flutter.yaml`), `lib/`, and `test/`.
+1. Clone the repo (forking is disabled — branch directly in this repo) and
+   create a branch off `master`:
+   - `feature/<payment-gateway>` for a new gateway, e.g. `feature/adyen`.
+   - `bugfix/<bug>` for a fix, e.g. `bugfix/paystack-missing-reference`.
+
+   Then create `packages/payment_<gateway>/` with its own `pubspec.yaml`
+   (`publish_to: 'none'`, `resolution: workspace`, a path dependency on
+   `payment_core` and, if redirect-based, `payment_webview_core`),
+   `analysis_options.yaml` (`include: package:flutter_lints/flutter.yaml`),
+   `lib/`, and `test/`.
 2. Add the new package to the `workspace:` list in the root `pubspec.yaml`
    and to `melos.yaml` if it isn't already covered by the glob.
 3. Implement `<Gateway>Request extends PaymentRequest` (or
@@ -61,7 +66,8 @@ scratch:
    `lib/wrteam_payment.dart` exports if it should be included in the
    umbrella (it should be, unless there's a specific reason not to).
 6. Update `README.md`'s package table.
-7. Commit and open a PR.
+7. Commit to your `feature/<payment-gateway>` or `bugfix/<bug>` branch and
+   open a PR against `master`.
 
 ### Verification before opening a PR
 
