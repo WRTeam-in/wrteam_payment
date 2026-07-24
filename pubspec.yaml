@@ -1,6 +1,6 @@
 name: wrteam_payment
-description: "A new Flutter package project."
-version: 0.0.1
+description: "Gateway-agnostic payment monorepo for WRTeam products: one shared contract, a plugin per gateway, no bundled UI."
+version: 0.1.0
 homepage:
 publish_to: 'none'
 
