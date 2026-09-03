@@ -20,6 +20,7 @@ void main() {
     expect(PayTabsGatewayPlugin().type, PaymentGatewayType.paytabs);
     expect(DpoGatewayPlugin().type, PaymentGatewayType.dpo);
     expect(PayPalGatewayPlugin().type, PaymentGatewayType.paypal);
+    expect(CashfreeGatewayPlugin().type, PaymentGatewayType.cashfree);
   });
 
   test('re-exports payment_webview_core', () {
