@@ -21,6 +21,7 @@ void main() {
     expect(DpoGatewayPlugin().type, PaymentGatewayType.dpo);
     expect(PayPalGatewayPlugin().type, PaymentGatewayType.paypal);
     expect(CashfreeGatewayPlugin().type, PaymentGatewayType.cashfree);
+    expect(PayUGatewayPlugin().type, PaymentGatewayType.payu);
   });
 
   test('re-exports payment_webview_core', () {

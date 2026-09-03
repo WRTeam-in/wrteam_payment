@@ -18,6 +18,7 @@ class PaymentGatewayType {
   static const dpo = PaymentGatewayType('dpo');
   static const paytabs = PaymentGatewayType('paytabs');
   static const cashfree = PaymentGatewayType('cashfree');
+  static const payu = PaymentGatewayType('payu');
 
   @override
   bool operator ==(Object other) => other is PaymentGatewayType && other.id == id;

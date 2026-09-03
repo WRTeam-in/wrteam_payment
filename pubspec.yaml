@@ -20,6 +20,7 @@ workspace:
   - packages/payment_dpo
   - packages/payment_paypal
   - packages/payment_cashfree
+  - packages/payment_payu
 
 dependencies:
   flutter:
@@ -46,6 +47,8 @@ dependencies:
     path: packages/payment_paypal
   payment_cashfree:
     path: packages/payment_cashfree
+  payment_payu:
+    path: packages/payment_payu
 
 dev_dependencies:
   flutter_test:

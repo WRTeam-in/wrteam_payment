@@ -10,3 +10,4 @@ export 'package:payment_paytabs/payment_paytabs.dart';
 export 'package:payment_dpo/payment_dpo.dart';
 export 'package:payment_paypal/payment_paypal.dart';
 export 'package:payment_cashfree/payment_cashfree.dart';
+export 'package:payment_payu/payment_payu.dart';
