@@ -9,3 +9,4 @@ export 'package:payment_flutterwave/payment_flutterwave.dart';
 export 'package:payment_paytabs/payment_paytabs.dart';
 export 'package:payment_dpo/payment_dpo.dart';
 export 'package:payment_paypal/payment_paypal.dart';
+export 'package:payment_cashfree/payment_cashfree.dart';

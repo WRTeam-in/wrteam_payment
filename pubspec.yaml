@@ -19,6 +19,7 @@ workspace:
   - packages/payment_paytabs
   - packages/payment_dpo
   - packages/payment_paypal
+  - packages/payment_cashfree
 
 dependencies:
   flutter:
@@ -43,6 +44,8 @@ dependencies:
     path: packages/payment_dpo
   payment_paypal:
     path: packages/payment_paypal
+  payment_cashfree:
+    path: packages/payment_cashfree
 
 dev_dependencies:
   flutter_test:
