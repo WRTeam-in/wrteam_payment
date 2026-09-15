@@ -38,6 +38,12 @@ class _WebViewCheckoutPageState extends State<WebViewCheckoutPage> {
             }
             return NavigationDecision.navigate;
           },
+          onUrlChange: (change) {
+            if (change.url == null) return;
+            if (change.url!.startsWith(widget.returnUrlPrefix)) {
+              Navigator.of(context).pop(Uri.parse(change.url!));
+            }
+          },
           onPageStarted: (_) => setState(() => _isLoading = true),
           onPageFinished: (_) => setState(() => _isLoading = false),
         ),
@@ -49,11 +55,14 @@ class _WebViewCheckoutPageState extends State<WebViewCheckoutPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(widget.title)),
-      body: Stack(
-        children: [
-          WebViewWidget(controller: _controller),
-          if (_isLoading) const LinearProgressIndicator(),
-        ],
+      body: SafeArea(
+        top: false,
+        child: Stack(
+          children: [
+            WebViewWidget(controller: _controller),
+            if (_isLoading) const LinearProgressIndicator(),
+          ],
+        ),
       ),
     );
   }
