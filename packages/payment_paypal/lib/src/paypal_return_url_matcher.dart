@@ -17,15 +17,19 @@ class PayPalReturnUrlMatcher implements WebViewOutcomeMatcher {
 
   @override
   WebViewCheckoutOutcome? call(Uri uri) {
-    final url = uri.toString();
-    if (url.startsWith(cancelUrlPrefix)) {
+    if (_matches(uri, Uri.parse(cancelUrlPrefix))) {
       return WebViewCheckoutOutcome.cancelled;
     }
-    if (url.startsWith(successUrlPrefix)) {
+    if (_matches(uri, Uri.parse(successUrlPrefix))) {
       // Approval only — the actual charge still needs a server-side
       // Capture Order call, so this isn't a genuine success yet.
       return WebViewCheckoutOutcome.pending;
     }
     return null;
   }
+
+  bool _matches(Uri url, Uri prefix) =>
+      url.scheme == prefix.scheme &&
+      url.host == prefix.host &&
+      url.path.startsWith(prefix.path);
 }

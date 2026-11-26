@@ -19,6 +19,11 @@ class WebViewCheckoutPage extends StatefulWidget {
   State<WebViewCheckoutPage> createState() => _WebViewCheckoutPageState();
 }
 
+bool _matchesReturnUrl(Uri url, Uri prefix) =>
+    url.scheme == prefix.scheme &&
+    url.host == prefix.host &&
+    url.path.startsWith(prefix.path);
+
 class _WebViewCheckoutPageState extends State<WebViewCheckoutPage> {
   late final WebViewController _controller;
   bool _isLoading = true;
@@ -32,8 +37,10 @@ class _WebViewCheckoutPageState extends State<WebViewCheckoutPage> {
         NavigationDelegate(
           onNavigationRequest: (request) {
             log(request.url);
-            if (request.url.startsWith(widget.returnUrlPrefix)) {
-              Navigator.of(context).pop(Uri.parse(request.url));
+            final requestUri = Uri.tryParse(request.url);
+            final prefixUri = Uri.parse(widget.returnUrlPrefix);
+            if (requestUri != null && _matchesReturnUrl(requestUri, prefixUri)) {
+              Navigator.of(context).pop(requestUri);
               return NavigationDecision.prevent;
             }
             return NavigationDecision.navigate;
