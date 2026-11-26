@@ -46,9 +46,9 @@ class _WebViewCheckoutPageState extends State<WebViewCheckoutPage> {
             return NavigationDecision.navigate;
           },
           onUrlChange: (change) {
-            if (change.url == null) return;
-            if (change.url!.startsWith(widget.returnUrlPrefix)) {
-              Navigator.of(context).pop(Uri.parse(change.url!));
+            final changeUri = Uri.tryParse(change.url ?? '');
+            if (changeUri != null && _matchesReturnUrl(changeUri, Uri.parse(widget.returnUrlPrefix))) {
+              Navigator.of(context).pop(changeUri);
             }
           },
           onPageStarted: (_) => setState(() => _isLoading = true),
