@@ -29,6 +29,33 @@ void main() {
       );
       expect(request.onReturn(Uri.parse('https://evil.com/return')), isNull);
     });
+
+    test(
+      'deprecated returnUrlPrefix: TransactionToken/TransID always yields pending',
+      () {
+        // ignore: deprecated_member_use
+        final request = DpoRequest(
+          checkoutUrl: 'https://secure.3gdirectpay.com/payv3.php?ID=abc123',
+          returnUrlPrefix: 'https://app.example.com/return',
+          transactionReference: 'txn_ref_123',
+        );
+
+        expect(
+          request.onReturn(
+            Uri.parse('https://app.example.com/return?TransactionToken=tok_1'),
+          ),
+          WebViewCheckoutOutcome.pending,
+        );
+        expect(
+          request.onReturn(Uri.parse('https://app.example.com/return?TransID=tok_2')),
+          WebViewCheckoutOutcome.pending,
+        );
+        expect(
+          request.onReturn(Uri.parse('https://app.example.com/return?event=cancel')),
+          WebViewCheckoutOutcome.cancelled,
+        );
+      },
+    );
   });
 
   group('DpoGatewayPlugin', () {

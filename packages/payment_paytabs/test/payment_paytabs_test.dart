@@ -29,6 +29,26 @@ void main() {
       );
       expect(request.onReturn(Uri.parse('https://evil.com/return')), isNull);
     });
+
+    test('deprecated returnUrlPrefix: tranRef always yields pending regardless of respStatus', () {
+      // ignore: deprecated_member_use
+      final request = PayTabsRequest(
+        checkoutUrl: 'https://secure.paytabs.com/payment/page/abc123',
+        returnUrlPrefix: 'https://app.example.com/return',
+        transactionReference: 'txn_ref_123',
+      );
+
+      expect(
+        request.onReturn(
+          Uri.parse('https://app.example.com/return?respStatus=D&tranRef=TST124'),
+        ),
+        WebViewCheckoutOutcome.pending,
+      );
+      expect(
+        request.onReturn(Uri.parse('https://app.example.com/return?event=cancel')),
+        WebViewCheckoutOutcome.cancelled,
+      );
+    });
   });
 
   group('PayTabsGatewayPlugin', () {

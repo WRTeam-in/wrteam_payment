@@ -29,6 +29,37 @@ void main() {
       );
       expect(request.onReturn(Uri.parse('https://evil.com/return')), isNull);
     });
+
+    test(
+      'deprecated returnUrlPrefix: status=cancelled trusted directly, else transaction id yields pending',
+      () {
+        // ignore: deprecated_member_use
+        final request = FlutterwaveRequest(
+          checkoutUrl: 'https://checkout.flutterwave.com/abc123',
+          returnUrlPrefix: 'https://app.example.com/return',
+          transactionReference: 'txn_ref_123',
+        );
+
+        expect(
+          request.onReturn(
+            Uri.parse('https://app.example.com/return?status=cancelled&tx_ref=ref_1'),
+          ),
+          WebViewCheckoutOutcome.cancelled,
+        );
+        expect(
+          request.onReturn(
+            Uri.parse(
+              'https://app.example.com/return?status=successful&transaction_id=id_1',
+            ),
+          ),
+          WebViewCheckoutOutcome.pending,
+        );
+        expect(
+          request.onReturn(Uri.parse('https://app.example.com/return?foo=fail')),
+          WebViewCheckoutOutcome.failed,
+        );
+      },
+    );
   });
 
   group('FlutterwaveGatewayPlugin', () {

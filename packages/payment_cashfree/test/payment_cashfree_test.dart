@@ -29,6 +29,28 @@ void main() {
       );
       expect(request.onReturn(Uri.parse('https://evil.com/return')), isNull);
     });
+
+    test('deprecated returnUrlPrefix: order_id always yields pending, bypassing the matcher', () {
+      // ignore: deprecated_member_use
+      final request = CashfreeRequest(
+        checkoutUrl: 'https://payments.cashfree.com/order/#abc123',
+        returnUrlPrefix: 'https://app.example.com/return',
+        transactionReference: 'order_ref_123',
+      );
+
+      expect(
+        request.onReturn(Uri.parse('https://app.example.com/return?order_id=ORDER123')),
+        WebViewCheckoutOutcome.pending,
+      );
+      expect(
+        request.onReturn(Uri.parse('https://app.example.com/return?event=cancel')),
+        WebViewCheckoutOutcome.cancelled,
+      );
+      expect(
+        request.onReturn(Uri.parse('https://app.example.com/return?foo=bar')),
+        WebViewCheckoutOutcome.failed,
+      );
+    });
   });
 
   group('CashfreeGatewayPlugin', () {

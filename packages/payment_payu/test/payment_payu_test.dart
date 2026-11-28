@@ -29,6 +29,35 @@ void main() {
       );
       expect(request.onReturn(Uri.parse('https://evil.com/return')), isNull);
     });
+
+    test(
+      'deprecated returnUrlPrefix: status=userCancelled trusted directly, else transaction id yields pending',
+      () {
+        // ignore: deprecated_member_use
+        final request = PayURequest(
+          checkoutUrl: 'https://secure.payu.in/_payment',
+          returnUrlPrefix: 'https://app.example.com/return',
+          transactionReference: 'txn_ref_123',
+        );
+
+        expect(
+          request.onReturn(
+            Uri.parse('https://app.example.com/return?status=userCancelled&txnid=TXN1'),
+          ),
+          WebViewCheckoutOutcome.cancelled,
+        );
+        expect(
+          request.onReturn(
+            Uri.parse('https://app.example.com/return?status=failure&txnid=TXN2'),
+          ),
+          WebViewCheckoutOutcome.pending,
+        );
+        expect(
+          request.onReturn(Uri.parse('https://app.example.com/return?event=cancel')),
+          WebViewCheckoutOutcome.cancelled,
+        );
+      },
+    );
   });
 
   group('PayUGatewayPlugin', () {

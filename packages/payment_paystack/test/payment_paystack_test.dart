@@ -29,6 +29,28 @@ void main() {
       );
       expect(request.onReturn(Uri.parse('https://evil.com/return')), isNull);
     });
+
+    test('deprecated returnUrlPrefix: reference/trxref always yields pending', () {
+      // ignore: deprecated_member_use
+      final request = PaystackRequest(
+        checkoutUrl: 'https://checkout.paystack.com/abc123',
+        returnUrlPrefix: 'https://app.example.com/return',
+        transactionReference: 'txn_ref_123',
+      );
+
+      expect(
+        request.onReturn(Uri.parse('https://app.example.com/return?reference=ref_1')),
+        WebViewCheckoutOutcome.pending,
+      );
+      expect(
+        request.onReturn(Uri.parse('https://app.example.com/return?trxref=ref_2')),
+        WebViewCheckoutOutcome.pending,
+      );
+      expect(
+        request.onReturn(Uri.parse('https://app.example.com/return?status=cancel')),
+        WebViewCheckoutOutcome.cancelled,
+      );
+    });
   });
 
   group('PaystackGatewayPlugin', () {
