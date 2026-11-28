@@ -43,6 +43,29 @@ void main() {
       );
       expect(request.onReturn(Uri.parse('https://app.example.com/somewhere-else')), isNull);
     });
+
+    test('deprecated returnUrl/successPath/cancelPath still compiles and resolves onReturn', () {
+      // ignore: deprecated_member_use
+      final request = PayPalRequest(
+        checkoutUrl: 'https://www.paypal.com/checkoutnow?token=EC-abc123',
+        returnUrl: 'https://app.example.com/return',
+        transactionReference: 'txn_ref_123',
+      );
+
+      expect(
+        request.onReturn(Uri.parse('https://app.example.com/return/cancel?token=EC-abc123')),
+        WebViewCheckoutOutcome.cancelled,
+      );
+      expect(
+        request.onReturn(Uri.parse('https://app.example.com/return/success?token=EC-abc123')),
+        WebViewCheckoutOutcome.pending,
+      );
+      expect(
+        request.onReturn(Uri.parse('https://app.example.com/return/other')),
+        WebViewCheckoutOutcome.failed,
+      );
+      expect(request.onReturn(Uri.parse('https://evil.com/return')), isNull);
+    });
   });
 
   group('PayPalGatewayPlugin', () {

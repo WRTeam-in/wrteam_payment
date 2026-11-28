@@ -4,14 +4,28 @@ import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 import 'webview_checkout_outcome.dart';
+import 'webview_checkout_request.dart' show returnUrlPrefixMatcher;
+import 'webview_legacy_on_return.dart';
+import 'webview_return_url_matcher.dart';
 
 class WebViewCheckoutPage extends StatefulWidget {
-  const WebViewCheckoutPage({
+  WebViewCheckoutPage({
     super.key,
     required this.checkoutUrl,
-    required this.onReturn,
+    WebViewCheckoutOutcome? Function(Uri uri)? onReturn,
+    @Deprecated('Use onReturn instead. Will be removed in a future release.')
+    bool Function(Uri uri)? isReturnUrl,
+    @Deprecated('Use onReturn instead. Will be removed in a future release.')
+    String? returnUrlPrefix,
+    @Deprecated('Use onReturn instead. Will be removed in a future release.')
+    WebViewOutcomeMatcher matcher = const WebViewReturnUrlMatcher(),
     required this.title,
-  });
+  }) : assert(
+         onReturn != null || isReturnUrl != null || returnUrlPrefix != null,
+         'Provide onReturn (isReturnUrl/returnUrlPrefix/matcher are deprecated and will be removed).',
+       ),
+       onReturn =
+           onReturn ?? legacyOnReturn(isReturnUrl ?? returnUrlPrefixMatcher(returnUrlPrefix!), matcher);
 
   final String checkoutUrl;
   final WebViewCheckoutOutcome? Function(Uri uri) onReturn;
