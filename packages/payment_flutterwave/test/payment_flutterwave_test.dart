@@ -6,7 +6,7 @@ import 'package:payment_webview_core/payment_webview_core.dart';
 FlutterwaveRequest _request({WebViewReturnUrlMatcher? matcher}) {
   return FlutterwaveRequest(
     checkoutUrl: 'https://checkout.flutterwave.com/abc123',
-    returnUrlPrefix: 'https://app.example.com/return',
+    isReturnUrl: returnUrlPrefixMatcher('https://app.example.com/return'),
     transactionReference: 'txn_ref_123',
     matcher: matcher ?? const WebViewReturnUrlMatcher(),
   );
@@ -18,7 +18,8 @@ void main() {
       final request = _request();
 
       expect(request.gatewayType, PaymentGatewayType.flutterwave);
-      expect(request.returnUrlPrefix, 'https://app.example.com/return');
+      expect(request.isReturnUrl(Uri.parse('https://app.example.com/return')), isTrue);
+      expect(request.isReturnUrl(Uri.parse('https://evil.com/return')), isFalse);
       expect(request.transactionReference, 'txn_ref_123');
     });
   });

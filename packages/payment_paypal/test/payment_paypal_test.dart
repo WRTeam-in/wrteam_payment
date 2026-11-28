@@ -13,11 +13,12 @@ PayPalRequest _request() {
 
 void main() {
   group('PayPalRequest', () {
-    test('gatewayType is paypal and returnUrlPrefix is the given returnUrl', () {
+    test('gatewayType is paypal and isReturnUrl matches the given returnUrl', () {
       final request = _request();
 
       expect(request.gatewayType, PaymentGatewayType.paypal);
-      expect(request.returnUrlPrefix, 'https://app.example.com/return');
+      expect(request.isReturnUrl(Uri.parse('https://app.example.com/return')), isTrue);
+      expect(request.isReturnUrl(Uri.parse('https://evil.com/return')), isFalse);
     });
 
     test('successUrlPrefix/cancelUrlPrefix default to returnUrl + /success, /cancel', () {

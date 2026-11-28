@@ -4,7 +4,9 @@ import 'package:payment_webview_core/payment_webview_core.dart';
 class FlutterwaveRequest extends WebViewCheckoutRequest {
   FlutterwaveRequest({
     required super.checkoutUrl,
-    required super.returnUrlPrefix,
+    super.isReturnUrl,
+    @Deprecated('Use isReturnUrl instead. Will be removed in a future release.')
+    super.returnUrlPrefix,
     required super.transactionReference,
     super.matcher,
     super.title,

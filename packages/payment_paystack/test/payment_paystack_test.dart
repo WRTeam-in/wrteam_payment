@@ -6,7 +6,7 @@ import 'package:payment_webview_core/payment_webview_core.dart';
 PaystackRequest _request({WebViewReturnUrlMatcher? matcher}) {
   return PaystackRequest(
     checkoutUrl: 'https://checkout.paystack.com/abc123',
-    returnUrlPrefix: 'https://app.example.com/return',
+    isReturnUrl: returnUrlPrefixMatcher('https://app.example.com/return'),
     transactionReference: 'txn_ref_123',
     matcher: matcher ?? const WebViewReturnUrlMatcher(),
   );
@@ -19,7 +19,8 @@ void main() {
 
       expect(request.gatewayType, PaymentGatewayType.paystack);
       expect(request.checkoutUrl, 'https://checkout.paystack.com/abc123');
-      expect(request.returnUrlPrefix, 'https://app.example.com/return');
+      expect(request.isReturnUrl(Uri.parse('https://app.example.com/return')), isTrue);
+      expect(request.isReturnUrl(Uri.parse('https://evil.com/return')), isFalse);
       expect(request.transactionReference, 'txn_ref_123');
     });
   });

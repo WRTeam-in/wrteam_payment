@@ -4,7 +4,9 @@ import 'package:payment_webview_core/payment_webview_core.dart';
 class CashfreeRequest extends WebViewCheckoutRequest {
   CashfreeRequest({
     required super.checkoutUrl,
-    required super.returnUrlPrefix,
+    super.isReturnUrl,
+    @Deprecated('Use isReturnUrl instead. Will be removed in a future release.')
+    super.returnUrlPrefix,
     required super.transactionReference,
     super.matcher,
     super.title,

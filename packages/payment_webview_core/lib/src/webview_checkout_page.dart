@@ -3,26 +3,29 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
+import 'webview_checkout_request.dart' show returnUrlPrefixMatcher;
+
 class WebViewCheckoutPage extends StatefulWidget {
-  const WebViewCheckoutPage({
+  WebViewCheckoutPage({
     super.key,
     required this.checkoutUrl,
-    required this.returnUrlPrefix,
+    bool Function(Uri uri)? isReturnUrl,
+    @Deprecated('Use isReturnUrl instead. Will be removed in a future release.')
+    String? returnUrlPrefix,
     required this.title,
-  });
+  }) : assert(
+         isReturnUrl != null || returnUrlPrefix != null,
+         'Provide isReturnUrl (returnUrlPrefix is deprecated and will be removed).',
+       ),
+       isReturnUrl = isReturnUrl ?? returnUrlPrefixMatcher(returnUrlPrefix!);
 
   final String checkoutUrl;
-  final String returnUrlPrefix;
+  final bool Function(Uri uri) isReturnUrl;
   final String title;
 
   @override
   State<WebViewCheckoutPage> createState() => _WebViewCheckoutPageState();
 }
-
-bool _matchesReturnUrl(Uri url, Uri prefix) =>
-    url.scheme == prefix.scheme &&
-    url.host == prefix.host &&
-    url.path.startsWith(prefix.path);
 
 class _WebViewCheckoutPageState extends State<WebViewCheckoutPage> {
   late final WebViewController _controller;
@@ -38,8 +41,7 @@ class _WebViewCheckoutPageState extends State<WebViewCheckoutPage> {
           onNavigationRequest: (request) {
             log(request.url);
             final requestUri = Uri.tryParse(request.url);
-            final prefixUri = Uri.parse(widget.returnUrlPrefix);
-            if (requestUri != null && _matchesReturnUrl(requestUri, prefixUri)) {
+            if (requestUri != null && widget.isReturnUrl(requestUri)) {
               Navigator.of(context).pop(requestUri);
               return NavigationDecision.prevent;
             }
@@ -47,7 +49,7 @@ class _WebViewCheckoutPageState extends State<WebViewCheckoutPage> {
           },
           onUrlChange: (change) {
             final changeUri = Uri.tryParse(change.url ?? '');
-            if (changeUri != null && _matchesReturnUrl(changeUri, Uri.parse(widget.returnUrlPrefix))) {
+            if (changeUri != null && widget.isReturnUrl(changeUri)) {
               Navigator.of(context).pop(changeUri);
             }
           },

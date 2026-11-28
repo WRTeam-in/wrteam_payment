@@ -6,7 +6,7 @@ import 'package:payment_webview_core/payment_webview_core.dart';
 DpoRequest _request({WebViewReturnUrlMatcher? matcher}) {
   return DpoRequest(
     checkoutUrl: 'https://secure.3gdirectpay.com/payv3.php?ID=abc123',
-    returnUrlPrefix: 'https://app.example.com/return',
+    isReturnUrl: returnUrlPrefixMatcher('https://app.example.com/return'),
     transactionReference: 'txn_ref_123',
     matcher: matcher ?? const WebViewReturnUrlMatcher(),
   );
@@ -18,7 +18,8 @@ void main() {
       final request = _request();
 
       expect(request.gatewayType, PaymentGatewayType.dpo);
-      expect(request.returnUrlPrefix, 'https://app.example.com/return');
+      expect(request.isReturnUrl(Uri.parse('https://app.example.com/return')), isTrue);
+      expect(request.isReturnUrl(Uri.parse('https://evil.com/return')), isFalse);
     });
   });
 

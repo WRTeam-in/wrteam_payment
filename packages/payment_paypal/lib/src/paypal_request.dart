@@ -14,7 +14,7 @@ class PayPalRequest extends WebViewCheckoutRequest {
   }) : successUrlPrefix = '$returnUrl$successPath',
        cancelUrlPrefix = '$returnUrl$cancelPath',
        super(
-         returnUrlPrefix: returnUrl,
+         isReturnUrl: returnUrlPrefixMatcher(returnUrl),
          matcher: PayPalReturnUrlMatcher(
            successUrlPrefix: '$returnUrl$successPath',
            cancelUrlPrefix: '$returnUrl$cancelPath',
