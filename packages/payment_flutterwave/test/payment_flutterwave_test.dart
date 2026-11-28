@@ -3,12 +3,15 @@ import 'package:payment_core/payment_core.dart';
 import 'package:payment_flutterwave/payment_flutterwave.dart';
 import 'package:payment_webview_core/payment_webview_core.dart';
 
-FlutterwaveRequest _request({WebViewReturnUrlMatcher? matcher}) {
+FlutterwaveRequest _request({WebViewCheckoutOutcome? Function(Uri uri)? onReturn}) {
   return FlutterwaveRequest(
     checkoutUrl: 'https://checkout.flutterwave.com/abc123',
-    isReturnUrl: returnUrlPrefixMatcher('https://app.example.com/return'),
+    onReturn:
+        onReturn ??
+        (uri) => uri.toString().startsWith('https://app.example.com/return')
+            ? WebViewCheckoutOutcome.pending
+            : null,
     transactionReference: 'txn_ref_123',
-    matcher: matcher ?? const WebViewReturnUrlMatcher(),
   );
 }
 
@@ -18,67 +21,19 @@ void main() {
       final request = _request();
 
       expect(request.gatewayType, PaymentGatewayType.flutterwave);
-      expect(request.isReturnUrl(Uri.parse('https://app.example.com/return')), isTrue);
-      expect(request.isReturnUrl(Uri.parse('https://evil.com/return')), isFalse);
+      expect(request.checkoutUrl, 'https://checkout.flutterwave.com/abc123');
       expect(request.transactionReference, 'txn_ref_123');
+      expect(
+        request.onReturn(Uri.parse('https://app.example.com/return')),
+        WebViewCheckoutOutcome.pending,
+      );
+      expect(request.onReturn(Uri.parse('https://evil.com/return')), isNull);
     });
   });
 
   group('FlutterwaveGatewayPlugin', () {
     test('type is flutterwave', () {
       expect(FlutterwaveGatewayPlugin().type, PaymentGatewayType.flutterwave);
-    });
-
-    group('resultFrom', () {
-      test('status=cancelled is trusted directly as cancelled', () {
-        final result = FlutterwaveGatewayPlugin.resultFrom(
-          Uri.parse('https://app.example.com/return?status=cancelled&tx_ref=ref_1'),
-          _request(),
-        );
-
-        expect(result.isCancelled, isTrue);
-      });
-
-      test('status=successful still yields pending, not success', () {
-        final result = FlutterwaveGatewayPlugin.resultFrom(
-          Uri.parse(
-            'https://app.example.com/return?status=successful&transaction_id=id_1&tx_ref=ref_1',
-          ),
-          _request(),
-        );
-
-        expect(result.isPending, isTrue);
-        expect(result.transactionId, 'id_1');
-      });
-
-      test('falls back to tx_ref when transaction_id is absent', () {
-        final result = FlutterwaveGatewayPlugin.resultFrom(
-          Uri.parse('https://app.example.com/return?status=successful&tx_ref=ref_2'),
-          _request(),
-        );
-
-        expect(result.isPending, isTrue);
-        expect(result.transactionId, 'ref_2');
-      });
-
-      test('with nothing usable, falls back to the matcher', () {
-        final result = FlutterwaveGatewayPlugin.resultFrom(
-          Uri.parse('https://app.example.com/return?foo=fail'),
-          _request(),
-        );
-
-        expect(result.isFailed, isTrue);
-      });
-
-      test('fails with NO_REFERENCE when nothing can be resolved', () {
-        final result = FlutterwaveGatewayPlugin.resultFrom(
-          Uri.parse('https://app.example.com/return?foo=bar'),
-          _request(),
-        );
-
-        expect(result.isFailed, isTrue);
-        expect(result.errorCode, 'NO_REFERENCE');
-      });
     });
   });
 }

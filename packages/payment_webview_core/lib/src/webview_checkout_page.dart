@@ -3,24 +3,18 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-import 'webview_checkout_request.dart' show returnUrlPrefixMatcher;
+import 'webview_checkout_outcome.dart';
 
 class WebViewCheckoutPage extends StatefulWidget {
-  WebViewCheckoutPage({
+  const WebViewCheckoutPage({
     super.key,
     required this.checkoutUrl,
-    bool Function(Uri uri)? isReturnUrl,
-    @Deprecated('Use isReturnUrl instead. Will be removed in a future release.')
-    String? returnUrlPrefix,
+    required this.onReturn,
     required this.title,
-  }) : assert(
-         isReturnUrl != null || returnUrlPrefix != null,
-         'Provide isReturnUrl (returnUrlPrefix is deprecated and will be removed).',
-       ),
-       isReturnUrl = isReturnUrl ?? returnUrlPrefixMatcher(returnUrlPrefix!);
+  });
 
   final String checkoutUrl;
-  final bool Function(Uri uri) isReturnUrl;
+  final WebViewCheckoutOutcome? Function(Uri uri) onReturn;
   final String title;
 
   @override
@@ -40,17 +34,19 @@ class _WebViewCheckoutPageState extends State<WebViewCheckoutPage> {
         NavigationDelegate(
           onNavigationRequest: (request) {
             log(request.url);
-            final requestUri = Uri.tryParse(request.url);
-            if (requestUri != null && widget.isReturnUrl(requestUri)) {
-              Navigator.of(context).pop(requestUri);
+            final uri = Uri.tryParse(request.url);
+            final outcome = uri == null ? null : widget.onReturn(uri);
+            if (uri != null && outcome != null) {
+              Navigator.of(context).pop((uri, outcome));
               return NavigationDecision.prevent;
             }
             return NavigationDecision.navigate;
           },
           onUrlChange: (change) {
-            final changeUri = Uri.tryParse(change.url ?? '');
-            if (changeUri != null && widget.isReturnUrl(changeUri)) {
-              Navigator.of(context).pop(changeUri);
+            final uri = Uri.tryParse(change.url ?? '');
+            final outcome = uri == null ? null : widget.onReturn(uri);
+            if (uri != null && outcome != null) {
+              Navigator.of(context).pop((uri, outcome));
             }
           },
           onPageStarted: (_) => setState(() => _isLoading = true),
